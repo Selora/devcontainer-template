@@ -63,6 +63,10 @@ Following the steps of the next section to get started
 
 - Test the demo application:
   - Run `just run`
+  - The app is supposed to be port-forwarded to `127.0.0.1:8000`
+  - `curl http://127.0.0.1:8000/` -> Hello World
+  - `curl http://127.0.0.1:8000/db-status` -> Check if the docker-composed postgres database is running
+  - Todo implement `just check` to do the sanity checks
 - Enable `direnv`:
   1. Navigate in the workspace and `direnv allow`
   2. Copy the API keys and secrets to the `.env` file. This file is not version-tracked.
