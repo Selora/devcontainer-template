@@ -1,0 +1,43 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/python
+{
+  // Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
+  //"image": "mcr.microsoft.com/devcontainers/base:1.0.19-bookworm",
+  "service": "devcontainer",
+  // The root where your project files are uploaded
+  "workspaceFolder": "/workspaces/devcontainer-template",
+  "shutdownAction": "stopCompose",
+  "remoteUser": "vscode",
+  // Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
+  // "remoteUser": "root"
+  "dockerComposeFile": "docker-compose.yml",
+  //  "entrypoint": "/usr/local/share/nix-entrypoint.sh",
+  // Features to add to the dev container. More info: https://containers.dev/features.
+  "features": {
+    "ghcr.io/devcontainers/features/python:1": {
+      "version": "os-provided" //doesn't compile python
+      //"version": "3.13" //DOES compile python, takes a while...
+    },
+    // To always set the python env AND .env files secrets when in the cwd
+    "ghcr.io/devcontainers-extra/features/direnv:1": {},
+    // For my dotfiles
+    "ghcr.io/devcontainers/features/nix:1": {}
+  },
+  // Use 'forwardPorts' to make a list of ports inside the container available locally.
+  "forwardPorts": [
+    8000, // Ports from the devcontainer don't need anything special
+    5432 // Ports from other containers specified in docker-compose needs to be forwarded
+  ],
+  // Configure tool-specific properties.
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python",
+        "ms-python.debugpy",
+        "ms-toolsai.jupyter"
+      ]
+    }
+  },
+  // Use 'postCreateCommand' to run commands after the container is created.
+  "postCreateCommand": "pipx install uv && uv sync --dev --all-extras && uv run just install",
+}

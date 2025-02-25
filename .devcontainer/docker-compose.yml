@@ -1,0 +1,37 @@
+services:
+  devcontainer:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: devcontainer-template:latest
+    command: sleep infinity
+    volumes:
+      - ..:/workspaces/devcontainer-template
+    networks:
+      - devcontainer-template-network
+    environment:
+      - SERVER_API_HOST=0.0.0.0
+      - SERVER_API_PORT=8000
+      - SERVER_DATABASE_CONNECTION_URL=postgresql+asyncpg://devcontainer:devcontainer@db:5432/devcontainer
+    depends_on:
+      - db
+
+  db:
+    image: postgres:15
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=devcontainer
+      - POSTGRES_PASSWORD=devcontainer
+      - POSTGRES_DB=devcontainer
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - devcontainer-template-network
+
+volumes:
+  postgres_data:
+
+networks:
+  devcontainer-template-network:
