@@ -15,11 +15,14 @@
   // Features to add to the dev container. More info: https://containers.dev/features.
   "features": {
     "ghcr.io/devcontainers/features/python:1": {
-      "version": "os-provided" //doesn't compile python
-      //"version": "3.13" //DOES compile python, takes a while...
+      //"version": "os-provided" //doesn't compile python
+      "version": "3.13", //DOES compile python, takes a while...
+      "installTools": true,
+      "toolsToInstall": "pipx,virtualenv,pytest"
     },
     // To always set the python env AND .env files secrets when in the cwd
     "ghcr.io/devcontainers-extra/features/direnv:1": {},
+    //"ghcr.io/christophermacgown/devcontainer-features/direnv:1": {},
     // For my dotfiles
     "ghcr.io/devcontainers/features/nix:1": {}
   },
